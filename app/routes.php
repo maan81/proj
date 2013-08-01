@@ -37,7 +37,7 @@ Route::post('login',function(){
 				);
 
 	if(Auth::attempt($userdata)){
-		echo 'Success';
+		return Redirect::to('dashboard');
 	}else{
 		echo 'Failure';
 	}
@@ -76,5 +76,13 @@ Route::post('signup',function(){
  *	dashboard after successful login
  */
 Route::get('dashboard',array('before'=>'auth',function(){
-	echo 'welcome to your dashboard.';
+	echo 'welcome to your dashboard. <a href="'.URL::to('logout').'">Logout</a>';
 }));
+
+/**
+ * logout user
+ */
+Route::get('logout',function(){
+	Auth::logout();
+	return Redirect::to('login');
+});
