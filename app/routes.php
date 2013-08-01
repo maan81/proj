@@ -15,3 +15,21 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('login',function(){
+	echo '<form method="post" action="'.URL::to('login').'" >';
+	echo '<p><input type="text" id="email" name="email" placeholder="email" /></p>';
+	echo '<p><input type="password" id="password" name="password" /></p>';
+	echo '<p><input type="submit" value="signup" /></p>';
+	echo '</form>';
+});
+
+Route::get('signup',function(){
+	echo '<form method="post" action="'.URL::to('login').'" >';
+	echo '<p><input type="text" id="username" name="username" placeholder="username" /></p>';
+	echo '<p><input type="text" id="email" name="email" placeholder="email" /></p>';
+	echo '<p><input type="password" id="password" name="password" /></p>';
+	echo '<p><input type="password" id="confirm_password" name="confirm_password" /></p>';
+	echo '<p><input type="submit" value="signup" /></p>';
+	echo '</form>';
+});
