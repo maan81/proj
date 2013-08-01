@@ -24,6 +24,18 @@ Route::get('login',function(){
 	echo '</form>';
 });
 
+Route::post('login',function(){
+	$userdata = array(
+					'email' 	=> Input::get('email'),
+					'password'	=> Input::get('password')
+				);
+	if(Auth::attempt($userdata)){
+		echo 'Success';
+	}else{
+		echo 'Failure';
+	}
+});
+
 Route::get('signup',function(){
 	echo '<form method="post" action="'.URL::to('login').'" >';
 	echo '<p><input type="text" id="username" name="username" placeholder="username" /></p>';
@@ -32,4 +44,7 @@ Route::get('signup',function(){
 	echo '<p><input type="password" id="confirm_password" name="confirm_password" /></p>';
 	echo '<p><input type="submit" value="signup" /></p>';
 	echo '</form>';
+});
+
+Route::post('signup',function(){
 });
