@@ -16,6 +16,9 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
+/**
+ *	login route
+ */
 Route::get('login',function(){
 	echo '<form method="post" action="'.URL::to('login').'" >';
 	echo '<p><input type="text" id="email" name="email" placeholder="email" /></p>';
@@ -24,6 +27,9 @@ Route::get('login',function(){
 	echo '</form>';
 });
 
+/**
+ *	login after submitting
+ */
 Route::post('login',function(){
 	$userdata = array(
 					'email' 	=> Input::get('email'),
@@ -36,6 +42,10 @@ Route::post('login',function(){
 	}
 });
 
+
+/**
+ *	new signup page
+ */
 Route::get('signup',function(){
 	echo '<form method="post" action="'.URL::to('login').'" >';
 	echo '<p><input type="text" id="username" name="username" placeholder="username" /></p>';
@@ -46,9 +56,15 @@ Route::get('signup',function(){
 	echo '</form>';
 });
 
+/**
+ *	new signup submitting
+ */
 Route::post('signup',function(){
 });
 
+/**
+ *	dashboard after successful login
+ */
 Route::get('dashboard',array('before'=>'auth',function(){
 	echo 'welcome to your dashboard.';
 }));
