@@ -35,6 +35,7 @@ Route::post('login',function(){
 					'email' 	=> Input::get('email'),
 					'password'	=> Input::get('password')
 				);
+
 	if(Auth::attempt($userdata)){
 		echo 'Success';
 	}else{
@@ -47,7 +48,7 @@ Route::post('login',function(){
  *	new signup page
  */
 Route::get('signup',function(){
-	echo '<form method="post" action="'.URL::to('login').'" >';
+	echo '<form method="post" action="'.URL::to('signup').'" >';
 	echo '<p><input type="text" id="username" name="username" placeholder="username" /></p>';
 	echo '<p><input type="text" id="email" name="email" placeholder="email" /></p>';
 	echo '<p><input type="password" id="password" name="password" /></p>';
@@ -63,7 +64,7 @@ Route::post('signup',function(){
 	$userdata = array(
 					'username' 	=> Input::get('username'),
 					'email' 	=> Input::get('email'),
-					'password'	=> Input::get('password')
+					'password'	=> Hash::make(Input::get('password'))
 				);
 	$user = new User($userdata);
 	$user->save();
