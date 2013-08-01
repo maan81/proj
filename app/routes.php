@@ -48,3 +48,7 @@ Route::get('signup',function(){
 
 Route::post('signup',function(){
 });
+
+Route::get('dashboard',function(){
+	echo 'welcome to your dashboard.';
+});
