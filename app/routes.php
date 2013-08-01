@@ -60,6 +60,15 @@ Route::get('signup',function(){
  *	new signup submitting
  */
 Route::post('signup',function(){
+	$userdata = array(
+					'username' 	=> Input::get('username'),
+					'email' 	=> Input::get('email'),
+					'password'	=> Input::get('password')
+				);
+	$user = new User($userdata);
+	$user->save();
+
+	return Redirect::to('login');
 });
 
 /**
