@@ -23,7 +23,8 @@ class Admin extends BaseController {
 			return Redirect::to('dashboard');
 		}else{
 			Session::forget('username');
-			echo 'Failure';
+			//echo 'Failure';
+			return Redirect::to('login')->with('flash_notice', 'Invalid Username and/or Password.');
 		}
 	}
 

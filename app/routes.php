@@ -32,5 +32,6 @@ Route::resource('dashboard','Admin@dashboard',array('before'=>'auth'));
 Route::get('logout',function(){
 	Auth::logout();
 	Session::flush();
-	return Redirect::to('login');
+	return Redirect::to('login')
+						->with('flash_notice', 'You are successfully logged out.');
 });

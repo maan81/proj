@@ -12,6 +12,13 @@
 	<meta http-equiv="Expires" content="0"/>
 </head>
 <body>
+
+	<?php if(Session::has('flash_notice')) :?>
+    <div class="error">
+        <p><?php echo Session::get('flash_notice') ?></p>
+    </div>
+	<?php endif?>
+
 	<form method="post" action="" >
 		<p>
 			<input type="text" id="email" name="email" placeholder="email" />
