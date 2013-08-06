@@ -6,6 +6,7 @@ class Admin extends BaseController {
 	 *	login route
 	 */
 	public function login(){
+		if (Session::has('username')) return Redirect::to('dashboard');
 
 		//disp login page if empty
 		if(empty($_POST)) return View::make('admin.login');
@@ -18,8 +19,10 @@ class Admin extends BaseController {
 
 		//validate
 		if(Auth::attempt($userdata)){
+			Session::put('username', $userdata['email']);
 			return Redirect::to('dashboard');
 		}else{
+			Session::forget('username');
 			echo 'Failure';
 		}
 	}
@@ -62,8 +65,17 @@ class Admin extends BaseController {
 		$user->password = Hash::make(Input::get('password'));
 		$user->save();
 
-
-		return Redirect::to('login');
+		Session::put('username', $userdata['email']);
+		return Redirect::to('dashboard');
 	}
 
+
+	/**
+	 * Users dashboard controller
+	 */
+	public function dashboard(){
+		if (!Session::has('username')) return Redirect::to('login');
+		
+		return View::make('admin.dashboard');
+	}
 }

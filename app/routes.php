@@ -24,14 +24,13 @@ Route::resource('signup','Admin@signup');
 /**
  *	dashboard after successful login
  */
-Route::get('dashboard',array('before'=>'auth',function(){
-	echo 'welcome to your dashboard. <a href="'.URL::to('logout').'">Logout</a>';
-}));
+Route::resource('dashboard','Admin@dashboard',array('before'=>'auth'));
 
 /**
  * logout user
  */
 Route::get('logout',function(){
 	Auth::logout();
+	Session::flush();
 	return Redirect::to('login');
 });
