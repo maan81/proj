@@ -18,7 +18,7 @@ class Admin extends BaseController {
 					);
 
 		//validate
-		if(Auth::attempt($userdata)){
+		if(Auth::attempt($userdata,!empty(Input::get('remember')))){
 			Session::put('username', $userdata['email']);
 			return Redirect::to('dashboard');
 		}else{

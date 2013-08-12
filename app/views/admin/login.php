@@ -34,19 +34,21 @@
 
 				<div class="input-prepend">
 				<label class="remember" for="remember">
-					<input type="checkbox" id="remember" />Remember me
+					<input type="checkbox" id="remember" name="remember" />Remember me
 				</label>
 				</div>
 				<div class="clearfix"></div>
 
-				<p class="center span5">
-					<input type="submit" class="btn btn-primary" name="Login" />
+				<p class="center span3">
+					<input type="submit" class="btn btn-primary" name="Login" value="Login"/>
 				</p>
+				<p class="center span3">
+					<a href="<?php echo URL::to('signup')?>">Signup</a>
+				</p>
+				<?php echo View::make('admin.footer')?>
 			</fieldset>
 		</form>
 	</div><!--/span-->
 </div><!--/row-->
-<a href="<?php echo URL::to('signup')?>">Signup</a>
 
 
-<?php echo View::make('admin.footer')?>
