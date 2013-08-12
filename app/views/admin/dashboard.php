@@ -15,5 +15,14 @@
 	welcome to your dashboard <?php echo Session::get('username')?> 
 
 	<a href="<?php echo URL::to('logout')?>">Logout</a>
+
 </body>
 </html>
+
+
+-------------
+<?php
+//$no_visible_elements=true;
+//include('header.php'); ?>
+
+<?php //include('footer.php'); ?>
