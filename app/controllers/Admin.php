@@ -72,11 +72,17 @@ class Admin extends BaseController {
 
 
 	/**
-	 * Users dashboard controller
+	 * Dashboard controller
 	 */
 	public function dashboard(){
 		if (!Session::has('username')) return Redirect::to('login');
 		
 		return View::make('admin.dashboard');
+	}
+
+	public function users(){
+		if (!Session::has('username')) return Redirect::to('login');
+
+		return 'in users';
 	}
 }

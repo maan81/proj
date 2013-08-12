@@ -45,10 +45,10 @@
 				<p class="center span3">
 					<a href="<?php echo URL::to('signup')?>">Signup</a>
 				</p>
-				<?php echo View::make('admin.footer')?>
 			</fieldset>
 		</form>
 	</div><!--/span-->
 </div><!--/row-->
 
 
+<?php echo View::make('admin.footer')?>
