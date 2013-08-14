@@ -83,6 +83,9 @@ class Admin extends BaseController {
 	public function users(){
 		if (!Session::has('username')) return Redirect::to('login');
 
-		return 'in users';
+		//$users = User::all();
+		$users = DB::table('users')->get();
+
+		return View::make('admin.users')->with('users', $users);
 	}
 }
