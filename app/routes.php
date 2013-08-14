@@ -11,7 +11,7 @@ Route::get('/', function()
 /**
  *	login route
  */
-Route::resource('login','Admin@login');
+Route::resource('login','AdminController@login');
 
 /**
  * logout user
@@ -26,7 +26,7 @@ Route::get('logout',function(){
 /**
  *	new signup page
  */
-Route::resource('signup','Admin@signup');
+Route::resource('signup','AdminController@signup');
 
 
 /**
@@ -34,5 +34,5 @@ Route::resource('signup','Admin@signup');
  */
 foreach(Config::get('menus.admin') as $key=>$val){
 	$key = strtolower($key);
-	Route::resource( $key, 'Admin@'.$key, array('before'=>'auth'));
+	Route::resource( $key, 'AdminController@'.$key, array('before'=>'auth'));
 }
