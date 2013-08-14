@@ -102,6 +102,12 @@ class AdminController extends BaseController {
 
 		if($id){
 
+			//disp empty form to create new user
+			if($id=='new'){
+				return View::make('admin.user');
+			}
+
+			//get data & disp. selected user for editing
 			$user = DB::table('users')->where('id',$id)->first();
 
 			if($task){

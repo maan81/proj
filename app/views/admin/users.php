@@ -24,7 +24,9 @@
 				<a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
 			</div>
 			<div class="new_btn">
-				<a href="users_new.html" style=""><span style="">Create New</span></a>
+				<a href="<?php echo URL::to('users/new')?>" style="">
+					<span style="">Create New</span>
+				</a>
 			</div>
 		</div>
 		<div class="box-content">

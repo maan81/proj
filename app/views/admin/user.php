@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="box-content">
-			<form class="form-horizontal">
+			<?php echo Form::open(array('class'=>'form-horizontal')) ?>
 			  <fieldset>
 				<legend>
 					<?php echo (!empty($user))?	'Update User':'Enter new User' ?>
@@ -116,7 +116,7 @@
 				</div>
 
 			  </fieldset>
-			</form>   
+			<?php echo Form::close() ?>
 
 		</div>
 	</div><!--/span-->
