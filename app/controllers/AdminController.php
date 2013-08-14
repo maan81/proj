@@ -125,5 +125,5 @@ class AdminController extends BaseController {
 	public function show(){echo 'in show';}
 	public function edit(){}
 	public function update(){}
-	public function destroy(){}
+	public function destroy(){echo 'in destroy';}
 }

@@ -46,18 +46,27 @@
 				  		<td><?php echo $user->created_at?></td>
 				  		<td><?php echo $user->updated_at?></td>
 						<td class="center">
-							<a class="btn btn-success" href="#">
+							<a class="btn btn-success" 
+									style="float:left; margin-right:4px;"
+									href="<?php echo URL::to('users/'.$user->id)?>">
 								<i class="icon-zoom-in icon-white"></i>  
 								View                                            
 							</a>
-							<a class="btn btn-info" href="#">
-								<i class="icon-edit icon-white"></i>  
-								Edit                                            
-							</a>
-							<a class="btn btn-danger" href="#">
-								<i class="icon-trash icon-white"></i> 
-								Delete
-							</a>
+							<?php echo Form::open(array('route'=>array('users.destroy', 
+																			$user->id
+																		), 
+														'method' => 'delete',
+														)
+													) 
+							?>
+							    <button type="submit" 
+							    		href="<?php echo URL::route('users.destroy', 
+							    									$user->id) ?>" 
+										class="btn btn-danger">
+									<i class="icon-trash icon-white"></i> 
+									Delete
+								</button>
+							<?php echo Form::close() ?>
 						</td>
 				  	</tr>
 				<?php endforeach?>
