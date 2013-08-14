@@ -2,7 +2,6 @@
 
 <?php echo View::make('admin.header'); ?>	
 
-
 <div>
 	<ul class="breadcrumb">
 		<li>
@@ -14,7 +13,9 @@
 			<span class="divider">/</span>
 		</li>
 		<li>
-			<a href="<?php echo URL::to('user')?>">Show</a>
+			<a href="<?php echo URL::to('user')?>">
+				<?php echo (!empty($user))?	'Show':'New' ?>
+			</a>
 		</li>
 	</ul>
 </div>
@@ -37,21 +38,26 @@
 		<div class="box-content">
 			<form class="form-horizontal">
 			  <fieldset>
-				<legend>Enter new Users</legend>
+				<legend>
+					<?php echo (!empty($user))?	'Update User':'Enter new User' ?>
+				</legend>
 				
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Name </label>
 				  <div class="controls">
 					<input type="text" class="span4 typeahead" 
-							id="typeahead"  data-provide="typeahead" data-items="4" />
+							id="typeahead"  data-provide="typeahead" 
+							data-items="4" 
+							value="<?php /*echo (!empty($user))?$user->name:''*/?>"/>
 				  </div>
 				</div>
 
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Username </label>
 				  <div class="controls">
-					<input type="text" class="span4 typeahead" 
-							id="typeahead"  data-provide="typeahead" data-items="4" />
+					<input type="text" class="span4 typeahead" id="typeahead"  
+							data-provide="typeahead" data-items="4" 
+							value="<?php echo (!empty($user))?$user->username:''?>"/>
 				  </div>
 				</div>
 				
@@ -74,15 +80,18 @@
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Email </label>
 				  <div class="controls">
-					<input type="text" class="span4 typeahead" 
-							id="typeahead"  data-provide="typeahead" data-items="4" />
+					<input type="text" class="span4 typeahead" id="typeahead"  
+							data-provide="typeahead" data-items="4" 
+							value="<?php echo (!empty($user))?$user->email:''?>"/>
 				  </div>
 				</div>
 
 				<div class="control-group">
 				  <label class="control-label" for="date01">Date input</label>
 				  <div class="controls">
-					<input type="text" class="input-xlarge datepicker" id="date01" value="">
+					<input type="text" class="input-xlarge datepicker" 
+							id="date01" 
+							value="<?php echo (!empty($user))?$user->created_at:''?>"/>
 				  </div>
 				</div>
 
@@ -103,7 +112,7 @@
 
 				<div class="form-actions">
 				  <input type="submit" class="btn btn-primary" name="submit" value="Save" />
-				  <a class="btn" href="ads.html">Cancel</a>
+				  <a class="btn" href="<?php echo URL::to('users')?>">Cancel</a>
 				</div>
 
 			  </fieldset>
