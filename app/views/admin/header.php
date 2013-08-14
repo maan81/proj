@@ -109,7 +109,7 @@
 						<span class="icon-bar"></span>
 					</a>
 					<a class="brand" href="index.html"> 
-						<img alt="Charisma Logo" src="<?php echo URL::to('admin/img/logo20.png')?>" /> 
+						<img alt="Charisma Logo" src=	"<?php echo URL::to('admin/img/logo20.png')?>" /> 
 						<span>Charisma</span>
 					</a>
 					
@@ -133,7 +133,7 @@
 					
 					<div class="top-nav nav-collapse">
 						<ul class="nav">
-							<li><a href="#">Visit Site</a></li>
+							<li><a href="<?php echo URL::to('/')?>">Visit Site</a></li>
 							<li>
 								<form class="navbar-search pull-left">
 									<input placeholder="Search" class="search-query-custom search-query span2" name="query" type="text">
