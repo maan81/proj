@@ -65,7 +65,7 @@
 	<![endif]-->
 
 	<!-- The fav icon -->
-	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="shortcut icon" href="<?php echo URL::to('admin/img/favicon.ico')?>">
 
 	<!-- new href styles-->
 	<style type="text/css">
@@ -90,7 +90,7 @@
 	</style>		
 
 	<!-- jQuery -->
-	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="<?php echo URL::to('js/jquery-1.7.2.min.js')?>"></script>
 </head>
 
 <body>
@@ -108,7 +108,10 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="index.html"> <img alt="Charisma Logo" src="img/logo20.png" /> <span>Charisma</span></a>
+					<a class="brand" href="index.html"> 
+						<img alt="Charisma Logo" src="<?php echo URL::to('admin/img/logo20.png')?>" /> 
+						<span>Charisma</span>
+					</a>
 					
 					
 					<!-- user dropdown starts -->

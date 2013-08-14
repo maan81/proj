@@ -5,7 +5,7 @@
 	<div>
 		<ul class="breadcrumb">
 			<li>
-				<a href="#">Home</a>
+				<a href="<?php echo URL::to('dashboard')?>">Dashboard</a>
 			</li>
 		</ul>
 	</div>
