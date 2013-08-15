@@ -1,5 +1,5 @@
 <?php $no_visible_elements=true; ?>
-<?print_r($user);die;?>
+<?php //print_r($user);die;?>
 <?php echo View::make('admin.header'); ?>	
 
 <div>
@@ -14,7 +14,7 @@
 		</li>
 		<li>
 			<a href="<?php echo URL::to('new')?>">
-				<?php echo (!empty($user))?	'Show':'New' ?>
+				<?php echo (!empty($user->username))?	'Show':'New' ?>
 			</a>
 		</li>
 	</ul>
@@ -51,14 +51,14 @@
 			<?php echo Form::open(array('class'=>'form-horizontal')) ?>
 			  <fieldset>
 				<legend>
-					<?php echo (!empty($user))?	'Update User':'Enter new User' ?>
+					<?php echo (!empty($user->username))?	'Update User':'Enter new User' ?>
 				</legend>
 				
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Name </label>
 				  <div class="controls">
 					<?php echo Form::text(	'name',
-											Input::old('name')/*.$user->name*/,
+											Input::old('name').$user->name,
 											array(
 												'class'=>'span4',
 												'id'=>"typeahead",
@@ -113,46 +113,46 @@
 											));?>
 				  </div>
 				</div>
-
-				<div class="control-group">
-				  <label class="control-label" for="date01">Date input</label>
-				  <div class="controls">
-					<?php echo Form::text(	'date',
-											Input::old('name')/*.$user->date*/,
-											array(
-												'class'=>"input-xlarge datepicker",
-												'id'=>"date01",
-											));?>
-				  </div>
-				</div>
-
-				<div class="control-group">
-					<label class="control-label">Activated</label>
-					<div class="controls">
-						<label class="radio">
-							<input type="radio" name="active" 
-									id="optionsRadios1" value="published" 
-									checked=""/>
-							<?php //echo Form::radio('active'),Input::old('active',array(
-									//										'id'=>'optionsRadios1',
-									//									'value'=>'published'
-									//									)),array('id'=>'optionsRadios1',))?>
-
-							Publish
-						</label>
-						<div style="clear:both"></div>
-						<label class="radio">
-							<input type="radio" name="active" 
-									id="optionsRadios2" value="draft"/>
-							<?php //echo Form::radio('active',Input::old('active',array(
-									//									'id'=>'optionsRadios2',
-									//									'value'=>'draft'
-									//									)),array('id'=>'optionsRadios2',))?>
-							Draft
-						</label>
+				<!--
+					<div class="control-group">
+					  <label class="control-label" for="date01">Date input</label>
+					  <div class="controls">
+						<?php echo Form::text(	'date',
+												Input::old('name')/*.$user->date*/	,
+												array(
+													'class'=>"input-xlarge datepicker",
+													'id'=>"date01",
+												));?>
+					  </div>
 					</div>
-				</div>
 
+					<div class="control-group">
+						<label class="control-label">Activated</label>
+						<div class="controls">
+							<label class="radio">
+								<input type="radio" name="active" 
+										id="optionsRadios1" value="published" 
+										checked=""/>
+								<?php //echo Form::radio('active'),Input::old('active',array(
+										//										'id'=>'optionsRadios1',
+										//									'value'=>'published'
+										//									)),array('id'=>'optionsRadios1',))?>
+
+								Publish
+							</label>
+							<div style="clear:both"></div>
+							<label class="radio">
+								<input type="radio" name="active" 
+										id="optionsRadios2" value="draft"/>
+								<?php //echo Form::radio('active',Input::old('active',array(
+										//									'id'=>'optionsRadios2',
+										//									'value'=>'draft'
+										//									)),array('id'=>'optionsRadios2',))?>
+								Draft
+							</label>
+						</div>
+					</div>
+				-->
 				<div class="form-actions">
 				  <input type="submit" class="btn btn-primary" name="submit" value="Save" />
 				  <a class="btn" href="<?php echo URL::to('users')?>">Cancel</a>

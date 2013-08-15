@@ -110,7 +110,12 @@ class AdminController extends BaseController {
 					return $this->store();
 				}
 
-				return View::make('admin.signup');
+				//disp empty signup form
+				$user = (object)array(	'name'	  =>'',
+										'username'=>'',
+										'email'	  =>'',
+									);
+				return View::make('admin.signup')->with('user',$user);
 			}
 
 			//get data & disp. selected user for editing
@@ -149,12 +154,18 @@ class AdminController extends BaseController {
 		}
 
 		//store new data
+		$userdata = array(
+							'name'		=>Input::get('name'),
+							'username'	=>Input::get('username'),
+							'password'	=>Input::get('password'),
+							'email'		=>Input::get('email')
+					);
 		$user = new User($userdata);
 		$user->password = Hash::make(Input::get('password'));
 		$user->save();
 
-		Session::put('username', $userdata['email']);
-		return Redirect::to('dashboard');
+		//Session::put('username', $userdata['email']);
+		return Redirect::to('users/'.$user->id);
 	}
 
 	public function create(){}
