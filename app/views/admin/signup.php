@@ -1,5 +1,5 @@
 <?php $no_visible_elements=true; ?>
-
+<?print_r($user);die;?>
 <?php echo View::make('admin.header'); ?>	
 
 <div>
@@ -57,24 +57,28 @@
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Name </label>
 				  <div class="controls">
-					<?php echo Form::text('name',Input::old('name'),array(
-																		'class'=>'span4',
-																		'id'=>"typeahead",
-																		'data-provide'=>"typeahead", 
-																		'data-items'=>"4",
-																	));?>
+					<?php echo Form::text(	'name',
+											Input::old('name')/*.$user->name*/,
+											array(
+												'class'=>'span4',
+												'id'=>"typeahead",
+												'data-provide'=>"typeahead", 
+												'data-items'=>"4",
+											));?>
 				  </div>
 				</div>
 
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Username </label>
 				  <div class="controls">
-					<?php echo Form::text('username',Input::old('name'),array(
-																	'class'=>"span4 typeahead",
-																	'id'=>"typeahead",
-																	'data-provide'=>"typeahead", 
-																	'data-items'=>"4",
-																	));?>
+					<?php echo Form::text(	'username',
+											Input::old('username').$user->username,
+											array(
+												'class'=>"span4 typeahead",
+												'id'=>"typeahead",
+												'data-provide'=>"typeahead", 
+												'data-items'=>"4",
+											));?>
 				  </div>
 				</div>
 				
@@ -99,22 +103,26 @@
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Email </label>
 				  <div class="controls">
-					<?php echo Form::email('email',Input::old('email'),array(
-																	'class'=>"span4 typeahead",
-																	'id'=>"typeahead",
-																	'data-provide'=>"typeahead", 
-																	'data-items'=>"4",
-																	));?>
+					<?php echo Form::email(	'email',
+											Input::old('email').$user->email,
+											array(
+												'class'=>"span4 typeahead",
+												'id'=>"typeahead",
+												'data-provide'=>"typeahead", 
+												'data-items'=>"4",
+											));?>
 				  </div>
 				</div>
 
 				<div class="control-group">
 				  <label class="control-label" for="date01">Date input</label>
 				  <div class="controls">
-					<?php echo Form::text('date',Input::old('name'),array(
-																	'class'=>"input-xlarge datepicker",
-																	'id'=>"date01",
-																	));?>
+					<?php echo Form::text(	'date',
+											Input::old('name')/*.$user->date*/,
+											array(
+												'class'=>"input-xlarge datepicker",
+												'id'=>"date01",
+											));?>
 				  </div>
 				</div>
 
