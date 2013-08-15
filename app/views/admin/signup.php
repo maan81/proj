@@ -48,10 +48,14 @@
 		</div>
 		<div class="box-content">
 
-			<?php echo Form::open(array('class'=>'form-horizontal')) ?>
+			<?php echo Form::open( array( 'url'  =>((!empty($user->username))? 
+														URL::to('users/'.$user->id.'/update'):
+														Request::url()),
+										  'class'=>'form-horizontal')
+								) ?>
 			  <fieldset>
 				<legend>
-					<?php echo (!empty($user->username))?	'Update User':'Enter new User' ?>
+					<?php echo (!empty($user->username))? 'Update User':'Enter new User' ?>
 				</legend>
 				
 				<div class="control-group">

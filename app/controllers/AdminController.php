@@ -123,6 +123,14 @@ class AdminController extends BaseController {
 
 			if($task){
 				//do reqd task
+				if($task=='update'){
+
+					//update user
+					$user = (object)array(	'name'	  =>'',
+											'username'=>'',
+											'email'	  =>'',
+										);
+				}
 			}
 
 			return View::make('admin.signup')->with('user', $user);
@@ -136,7 +144,7 @@ class AdminController extends BaseController {
 		return View::make('admin.users')->with('users', $users);
 	}
 
-	private function store(){
+	private function store($update_id=false){
 
 		//validate
 		$rules = array(	'name'	   => 'required', //extend name validation .....
@@ -150,17 +158,30 @@ class AdminController extends BaseController {
 
 
 		if($validator->fails()){
+			if($update_id)
+			    return Redirect::to('users/'.$update_id)->withErrors($validator)->withInput();
+
 		    return Redirect::to('users/new')->withErrors($validator)->withInput();
 		}
 
 		//store new data
-		$userdata = array(
-							'name'		=>Input::get('name'),
-							'username'	=>Input::get('username'),
-							'password'	=>Input::get('password'),
-							'email'		=>Input::get('email')
-					);
-		$user = new User($userdata);
+		if(!$update_id){
+			$userdata = array(
+								'name'		=>Input::get('name'),
+								'username'	=>Input::get('username'),
+								'password'	=>Input::get('password'),
+								'email'		=>Input::get('email')
+						);
+			$user = new User($userdata);
+
+		//update existing data
+		}else{
+			$user = User::find($update_id);
+			$user->name		= Input::get('name');
+			$user->Username = Input::get('username');
+			$user->Password = Input::get('password');
+			$user->email 	= Input::get('email');
+		}
 		$user->password = Hash::make(Input::get('password'));
 		$user->save();
 
