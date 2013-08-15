@@ -82,6 +82,7 @@ class AdminController extends BaseController {
 	}
 
 	public function users(){ 
+
 		if (!Session::has('username')) return Redirect::to('login');
 		$id=false;
 		$task=false;
@@ -99,12 +100,17 @@ class AdminController extends BaseController {
 				}
 			}
 		}
-
 		if($id){
 
 			//disp empty form to create new user
 			if($id=='new'){
-				return View::make('admin.user');
+	
+				//store new user
+				if(!empty($_POST)){
+					return $this->store();
+				}
+
+				return View::make('admin.signup');
 			}
 
 			//get data & disp. selected user for editing
@@ -114,7 +120,7 @@ class AdminController extends BaseController {
 				//do reqd task
 			}
 
-			return View::make('admin.user')->with('user', $user);
+			return View::make('admin.signup')->with('user', $user);
 		}
 
 
@@ -125,9 +131,34 @@ class AdminController extends BaseController {
 		return View::make('admin.users')->with('users', $users);
 	}
 
+	private function store(){
+
+		//validate
+		$rules = array(	'name'	   => 'required', //extend name validation .....
+						'username' => 'required|min:5|alpha_dash|unique:users',
+						'password' => 'required|min:5|confirmed',
+						'email'	   => 'required|email'
+					);
+
+
+		$validator = Validator::make(Input::all(), $rules);
+
+
+		if($validator->fails()){
+		    return Redirect::to('users/new')->withErrors($validator)->withInput();
+		}
+
+		//store new data
+		$user = new User($userdata);
+		$user->password = Hash::make(Input::get('password'));
+		$user->save();
+
+		Session::put('username', $userdata['email']);
+		return Redirect::to('dashboard');
+	}
 
 	public function create(){}
-	public function store(){}
+	//public function store(){}
 	public function show(){echo 'in show';}
 	public function edit(){}
 	public function update(){}

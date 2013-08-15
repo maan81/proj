@@ -35,4 +35,5 @@ Route::resource('signup','AdminController@signup');
 foreach(Config::get('menus.admin') as $key=>$val){
 	$key = strtolower($key);
 	Route::resource( $key, 'AdminController@'.$key, array('before'=>'auth'));
+	Route::resource( $key.'/new', 'AdminController@'.$key, array('before'=>'auth'));
 }
