@@ -33,20 +33,22 @@
 			<table class="table table-striped table-bordered bootstrap-datatable datatable">
 			  <thead>
 				  <tr>
+				  	  <th>ID</th>
 					  <th>Username</th>
 					  <th>Email</th>
 					  <th>Date Registered</th>
-					  <th>Date Upated</th>
+					  <th>Date Updated</th>
 					  <th>Actions</th>
 				  </tr>
 			  </thead>   
 			  <tbody>
 				<?php foreach ($users as $user): ?>
 				  	<tr>
-				  		<td><?php echo $user->username?></td>
-				  		<td><?php echo $user->email?></td>
-				  		<td><?php echo $user->created_at?></td>
-				  		<td><?php echo $user->updated_at?></td>
+				  		<td width="5%"><?php echo $user->id?></td>
+				  		<td width="24%"><?php echo $user->username?></td>
+				  		<td width="16%"><?php echo $user->email?></td>
+				  		<td width="16%"><?php echo $user->created_at?></td>
+				  		<td width="16%"><?php echo $user->updated_at?></td>
 						<td class="center">
 							<a class="btn btn-success" 
 									style="float:left; margin-right:4px;"
