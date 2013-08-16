@@ -130,6 +130,7 @@ class AdminController extends BaseController {
 											'username'=>'',
 											'email'	  =>'',
 										);
+					return $this->store($id);
 				}
 			}
 
@@ -148,14 +149,14 @@ class AdminController extends BaseController {
 
 		//validate
 		$rules = array(	'name'	   => 'required', //extend name validation .....
-						'username' => 'required|min:5|alpha_dash|unique:users',
 						'password' => 'required|min:5|confirmed',
 						'email'	   => 'required|email'
 					);
-
+		if(!$update_id){
+			$rules['username'] = 'required|min:5|alpha_dash|unique:users';
+		}
 
 		$validator = Validator::make(Input::all(), $rules);
-
 
 		if($validator->fails()){
 			if($update_id)
@@ -164,26 +165,29 @@ class AdminController extends BaseController {
 		    return Redirect::to('users/new')->withErrors($validator)->withInput();
 		}
 
+
 		//store new data
 		if(!$update_id){
 			$userdata = array(
 								'name'		=>Input::get('name'),
-								'username'	=>Input::get('username'),
+								//'username'	=>Input::get('username'),
 								'password'	=>Input::get('password'),
 								'email'		=>Input::get('email')
 						);
 			$user = new User($userdata);
 
+
 		//update existing data
 		}else{
 			$user = User::find($update_id);
 			$user->name		= Input::get('name');
-			$user->Username = Input::get('username');
+			//$user->Username = Input::get('username');
 			$user->Password = Input::get('password');
 			$user->email 	= Input::get('email');
 		}
 		$user->password = Hash::make(Input::get('password'));
 		$user->save();
+
 
 		//Session::put('username', $userdata['email']);
 		return Redirect::to('users/'.$user->id);
