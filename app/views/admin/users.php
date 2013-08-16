@@ -14,6 +14,24 @@
 	</ul>
 </div>
 
+<?php if($errors->has()): //or $errors->any() ?>
+<div class="alert alert-error">
+	<button data-dismiss="alert" class="close" type="button">×</button>
+	<ul>
+	   <?php foreach($errors->all() as $message) : ?>
+	    <li><?php echo  $message ?></li>
+	    <?php endforeach ?>
+	</ul>
+</div>
+<?php endif?>
+
+<?php if(Session::has('success')): ?>
+<div class="alert alert-success">
+	<button data-dismiss="alert" class="close" type="button">×</button>
+	<?php echo Session::get('success') ?>
+</div>
+<?php endif?>
+
 <div class="row-fluid sortable">		
 	<div class="box span12">
 		<div class="box-header well" data-original-title>
@@ -56,20 +74,8 @@
 								<i class="icon-zoom-in icon-white"></i>  
 								View                                            
 							</a>
-							<?php echo Form::open(array('route'=>array('users.destroy', 
-																			$user->id
-																		), 
-														'method' => 'delete',
-														)
-													) 
-							?>
-							    <button type="submit" 
-							    		href="<?php echo URL::route('users.destroy', 
-							    									$user->id) ?>" 
-										class="btn btn-danger">
-									<i class="icon-trash icon-white"></i> 
-									Delete
-								</button>
+							<?php echo Form::open( array('url'=>(URL::to('users/'.$user->id.'/delete') ) ) ) ?>
+								<input type="submit" class="btn btn-danger" name="submit" value="Delete" />
 							<?php echo Form::close() ?>
 						</td>
 				  	</tr>

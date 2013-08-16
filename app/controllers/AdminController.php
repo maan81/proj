@@ -118,11 +118,9 @@ class AdminController extends BaseController {
 				return View::make('admin.signup')->with('user',$user);
 			}
 
-			//get data & disp. selected user for editing
-			$user = DB::table('users')->where('id',$id)->first();
-
+			//do update, delete
 			if($task){
-				//do reqd task
+
 				if($task=='update'){
 
 					//update user
@@ -132,8 +130,20 @@ class AdminController extends BaseController {
 										);
 					return $this->store($id);
 				}
+
+				elseif($task=='delete'){
+
+					//delete user
+					return $this->delete($id);
+				}
 			}
 
+			//get data & disp. selected user for editing
+			$user = DB::table('users')->where('id',$id)->first();
+
+			// if(empty($user)){
+			// 	return View::make('admin.users')->withErrors($error);
+			// }
 			return View::make('admin.signup')->with('user', $user);
 		}
 
@@ -143,6 +153,31 @@ class AdminController extends BaseController {
 		$users = DB::table('users')->get();
 
 		return View::make('admin.users')->with('users', $users);
+	}
+
+	private function delete($delete_id=false){
+
+		//validate
+		$rules = array(	'id' => 'required|integer');
+
+		$validator = Validator::make(array('id'=>$delete_id), $rules);
+
+		if($validator->fails()){
+			return Redirect::to('users')->withErrors($validator)->withInput();
+	  	}
+
+		$user = User::find($delete_id);
+
+		if($user->delete()){
+			
+			//Session::put('username', $userdata['email']);
+			return Redirect::to('users')->with('success', 'User ID '.$delete_id.' deleted.');
+
+		// }else{
+
+		// 	//Session::put('username', $userdata['email']);
+		// 	return Redirect::to('users')->withErrors('error','Invalid ID');
+		}
 	}
 
 	private function store($update_id=false){
