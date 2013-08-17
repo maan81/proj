@@ -43,4 +43,17 @@ foreach(Config::get('menus.admin') as $key=>$val){
 Route::resource('dashboard', 'AdminController@dashboard', array('before'=>'auth'));
 Route::resource('users', 'AdminController@users', array('before'=>'auth'));
 //Route::resource('users/{id}', 'AdminController@users', array('before'=>'auth'));
-Route::resource('users/{id}/{task?}', 'AdminController@users', array('before'=>'auth'));
+Route::get('users/{id}', 'AdminController@users', array('before'=>'auth'));
+Route::post('users/{id}', 'AdminController@users', array('before'=>'auth'));
+Route::get('users/{id}/{pages}', 'AdminController@users', array('before'=>'auth'));
+Route::post('users/{id}/{pages}', 'AdminController@users', array('before'=>'auth'));
+
+
+
+Route::resource('pages', 'AdminController@pages', array('before'=>'auth'));
+Route::get('pages/{id}', 'AdminController@pages', array('before'=>'auth'));
+Route::post('pages/{id}', 'AdminController@pages', array('before'=>'auth'));
+Route::get('pages/{id}/{pages}', 'AdminController@pages', array('before'=>'auth'));
+Route::post('pages/{id}/{pages}', 'AdminController@pages', array('before'=>'auth'));
+
+

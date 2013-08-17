@@ -155,6 +155,81 @@ class AdminController extends BaseController {
 		return View::make('admin.users')->with('users', $users);
 	}
 
+
+	public function pages(){ 
+
+		if (!Session::has('username')) return Redirect::to('login');
+		$id=false;
+		$task=false;
+
+		$url = explode('/', Request::url());
+		foreach($url as $key=>$val){
+			if($val=='pages'){
+				if(!empty($url[$key+1])){
+					$id=$url[$key+1];
+
+					if(!empty($url[$key+2])){
+						$task=$url[$key+2];
+					}
+					break;
+				}
+			}
+		}
+		if($id){
+
+			//disp empty form to create new page
+			if($id=='new'){
+	
+				//store new page
+				if(!empty($_POST)){
+					return $this->store();
+				}
+
+				//disp empty new form
+				$page = (object)array(	'username'=>'',
+										'page'	  =>'',
+									);
+				return View::make('admin.page')->with('user',$user);
+			}
+
+			//do update, delete
+			if($task){
+
+				if($task=='update'){
+
+					//update page
+					$page = (object)array(	'username'=>'',
+											'page'	  =>'',
+										);
+					return $this->store($id);
+				}
+
+				elseif($task=='delete'){
+
+					//delete page
+					return $this->delete($id);
+				}
+			}
+
+			//get data & disp. selected page for editing
+			$page = DB::table('pages')->where('id',$id)->first();
+
+			// if(empty($page)){
+			// 	return View::make('admin.pages')->withErrors($error);
+			// }
+			return View::make('admin.page')->with('page', $page);
+		}
+
+
+
+
+		$pages = DB::table('pages')->get();
+
+		return View::make('admin.pages')->with('pages', $pages);
+	}
+
+
+
 	private function delete($delete_id=false){
 
 		//validate
@@ -205,7 +280,7 @@ class AdminController extends BaseController {
 		if(!$update_id){
 			$userdata = array(
 								'name'		=>Input::get('name'),
-								//'username'	=>Input::get('username'),
+								'username'	=>Input::get('username'),
 								'password'	=>Input::get('password'),
 								'email'		=>Input::get('email')
 						);
