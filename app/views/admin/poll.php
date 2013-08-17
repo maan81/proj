@@ -76,25 +76,6 @@
 				</div>
 
 
-
-				<div class="control-group">
-					<label class="control-label" for="typeahead">Answer 1 </label>
-					<div class="controls">
-						<?php echo Form::text(	'answer_1',
-												((!empty($poll->id))? 
-															$poll->answer_1:
-															Input::old('answer_1')),
-												array(
-													'class'		=>'span6',
-													'id'		=>"typeahead",
-													'data-provide'=>"typeahead", 
-													'data-items'=>"4",
-												)
-											);?>
-					</div>
-				</div>
-
-
 				<div class="control-group">
 					<label class="control-label" for="typeahead">Answer 1 </label>
 					<div class="controls">
@@ -134,7 +115,7 @@
 				<div class="control-group">
 					<label class="control-label" for="typeahead">Answer 3 </label>
 					<div class="controls">
-						<?php echo Form::text(	'answer_1',
+						<?php echo Form::text(	'answer_3',
 												((!empty($poll->id))? 
 															$poll->answer_3:
 															Input::old('answer_3')),

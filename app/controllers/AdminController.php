@@ -30,7 +30,6 @@ class AdminController extends BaseController {
 	}
 
 
-
 	/**
 	 * Signup 
 	 */
@@ -278,10 +277,17 @@ class AdminController extends BaseController {
 				if($task=='update'){
 
 					//update poll
-					$poll = (object)array(	'username'=>'',
-											'poll'	  =>'',
+					$poll = (object)array(	'question'	=>'',
+											'answer_1'	=>'',
+											'answer_2'	=>'',
+											'answer_3'	=>'',
+											'answer_4'	=>'',
+											'count_1'	=>'',
+											'count_2'	=>'',
+											'count_3'	=>'',
+											'count_4'	=>'',
 										);
-					return $this->store_page($id);
+					return $this->store_poll($id);
 				}
 
 				elseif($task=='delete'){
@@ -319,7 +325,12 @@ class AdminController extends BaseController {
 			return Redirect::to($table)->withErrors($validator)->withInput();
 	  	}
 
-		$item = ($table=='user')?User::find($delete_id):Page::find($delete_id);
+		
+		switch($table){
+			case 'user' : $item = User::find($delete_id); break;
+			case 'pages': $item = Page::find($delete_id); break;
+			case 'polls': $item = Poll::find($delete_id); break;
+		}
 
 		if($item->delete()){
 			
@@ -336,39 +347,47 @@ class AdminController extends BaseController {
 	private function store_poll($update_id=false){
 
 		//validate
-		$rules = array('title'=>'required'/*extend name validation .....*/ );
+		$rules = array(	'question'=>'required|min:5',
+						'answer_1'=>'required',
+						'answer_2'=>'required',
+						'answer_3'=>'required',
+						'answer_4'=>'required',
+					);
 
 		$validator = Validator::make(Input::all(), $rules);
 
 		if($validator->fails()){
 			if($update_id)
-			    return Redirect::to('pages/'.$update_id)->withErrors($validator)->withInput();
+			    return Redirect::to('polls/'.$update_id)->withErrors($validator)->withInput();
 
-		    return Redirect::to('pages/new')->withErrors($validator)->withInput();
+		    return Redirect::to('polls/new')->withErrors($validator)->withInput();
 		}
 
 
 		//store new data
 		if(!$update_id){
-			$userdata = array(
-								'title'	=>Input::get('title'),
-								'page'	=>Input::get('page'),
-								'summary'=>Input::get('summary'),
-						);
-			$page = new Page($userdata);
+			$userdata = array(	'question'=>Input::get('question'),
+								'answer_1'=>Input::get('answer_1'),
+								'answer_2'=>Input::get('answer_2'),
+								'answer_3'=>Input::get('answer_3'),
+								'answer_4'=>Input::get('answer_4'),
+							);
+			$poll = new Poll($userdata);
 
 
 		//update existing data
 		}else{
-			$page 			= Page::find($update_id);
-			$page->title	= Input::get('title');
-			$page->page 	= Input::get('page');
-			$page->summary	= Input::get('summary');
+			$poll 			= Poll::find($update_id);
+			$poll->question	= Input::get('question');
+			$poll->answer_1	= Input::get('answer_1');
+			$poll->answer_2	= Input::get('answer_2');
+			$poll->answer_3	= Input::get('answer_3');
+			$poll->answer_4	= Input::get('answer_4');
 		}
 
-		$page->save();
+		$poll->save();
 
-		return Redirect::to('pages/'.$page->id);
+		return Redirect::to('polls/'.$poll->id);
 	}
 
 	private function store_page($update_id=false){
@@ -457,10 +476,4 @@ class AdminController extends BaseController {
 		return Redirect::to('users/'.$user->id);
 	}
 
-	public function create(){}
-	//public function store(){}
-	public function show(){echo 'in show';}
-	public function edit(){}
-	public function update(){}
-	public function destroy(){echo 'in destroy';}
 }
