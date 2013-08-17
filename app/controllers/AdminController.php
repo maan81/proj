@@ -229,6 +229,84 @@ class AdminController extends BaseController {
 	}
 
 
+	public function polls(){ 
+
+		if (!Session::has('username')) return Redirect::to('login');
+		$id=false;
+		$task=false;
+
+		$url = explode('/', Request::url());
+		foreach($url as $key=>$val){
+			if($val=='polls'){
+				if(!empty($url[$key+1])){
+					$id=$url[$key+1];
+
+					if(!empty($url[$key+2])){
+						$task=$url[$key+2];
+					}
+					break;
+				}
+			}
+		}
+		if($id){
+
+			//disp empty form to create new poll
+			if($id=='new'){
+	
+				//store new poll
+				if(!empty($_POST)){
+					return $this->store_poll();
+				}
+
+				//disp empty new form
+				$poll = (object)array(	'question'	=>'',
+										'answer_1'	=>'',
+										'answer_2'	=>'',
+										'answer_3'	=>'',
+										'answer_4'	=>'',
+										'count_1'	=>'',
+										'count_2'	=>'',
+										'count_3'	=>'',
+										'count_4'	=>'',
+									);
+				return View::make('admin.poll')->with('poll',$poll);
+			}
+
+			//do update, delete
+			if($task){
+
+				if($task=='update'){
+
+					//update poll
+					$poll = (object)array(	'username'=>'',
+											'poll'	  =>'',
+										);
+					return $this->store_page($id);
+				}
+
+				elseif($task=='delete'){
+
+					//delete poll
+					return $this->delete($id,'polls');
+				}
+			}
+
+			//get data & disp. selected poll for editing
+			$poll = DB::table('polls')->where('id',$id)->first();
+
+			// if(empty($poll)){
+			// 	return View::make('admin.polls')->withErrors($error);
+			// }
+			return View::make('admin.poll')->with('poll', $poll);
+		}
+
+
+
+
+		$polls = DB::table('polls')->get();
+
+		return View::make('admin.polls')->with('polls', $polls);
+	}
 
 	private function delete($delete_id=false,$table='users'){
 
@@ -253,6 +331,44 @@ class AdminController extends BaseController {
 		// 	//Session::put('username', $userdata['email']);
 		// 	return Redirect::to('users')->withErrors('error','Invalid ID');
 		}
+	}
+
+	private function store_poll($update_id=false){
+
+		//validate
+		$rules = array('title'=>'required'/*extend name validation .....*/ );
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if($validator->fails()){
+			if($update_id)
+			    return Redirect::to('pages/'.$update_id)->withErrors($validator)->withInput();
+
+		    return Redirect::to('pages/new')->withErrors($validator)->withInput();
+		}
+
+
+		//store new data
+		if(!$update_id){
+			$userdata = array(
+								'title'	=>Input::get('title'),
+								'page'	=>Input::get('page'),
+								'summary'=>Input::get('summary'),
+						);
+			$page = new Page($userdata);
+
+
+		//update existing data
+		}else{
+			$page 			= Page::find($update_id);
+			$page->title	= Input::get('title');
+			$page->page 	= Input::get('page');
+			$page->summary	= Input::get('summary');
+		}
+
+		$page->save();
+
+		return Redirect::to('pages/'.$page->id);
 	}
 
 	private function store_page($update_id=false){
@@ -287,7 +403,7 @@ class AdminController extends BaseController {
 			$page->page 	= Input::get('page');
 			$page->summary	= Input::get('summary');
 		}
-//print_r($page);die;
+
 		$page->save();
 
 		return Redirect::to('pages/'.$page->id);
