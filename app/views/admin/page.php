@@ -62,7 +62,9 @@
 				  <label class="control-label" for="typeahead">Title </label>
 				  <div class="controls">
 					<?php echo Form::text(	'title',
-											Input::old('title')/*.$page->title*/,
+											((!empty($page->id))? 
+														$page->title:
+														Input::old('title')),
 											array(
 												'class'=>'span4',
 												'id'=>"typeahead",
@@ -88,12 +90,14 @@
 			  											}) , 100});
 				  	</script>
 					<?php echo Form::textarea('page',
-													Input::old('page')/*.$page->id*/,
+												((!empty($page->id))? 
+															$page->page:
+															Input::old('page')),
 													array(
 														'class'=>'cleditor',
 														'rows'=>"3",
-														'style'=>'height:100px',
-													));?>
+													)
+											);?>
 				  </div>
 				</div>
 
@@ -103,25 +107,35 @@
 						Summary
 					</label>
 					<div class="controls">
-						<textarea class="cleditor" id="textarea2" 
-								rows="3">
-						</textarea>
+						<?php echo Form::textarea('summary',
+														((!empty($page->id))? 
+																	$page->summary:
+																	Input::old('summary')),
+
+														array(
+															'class'=>'cleditor',
+															'rows'=>"3",
+														)
+												);?>
 					</div>
 				</div>
 
 				
-				<div class="control-group">
+<!--				<div class="control-group">
 				  <label class="control-label" for="date01">Date input</label>
 				  <div class="controls">
 					<?php echo Form::text(	'date',
-											Input::old('name')/*.$page->date*/	,
+											((!empty($page->id))? 
+														$page->title:
+														Input::old('title')),
 											array(
 												'class'=>"input-xlarge datepicker",
 												'id'=>"date01",
-											));?>
+											)
+										);?>
 				  </div>
 				</div>
-
+-->
 				<div class="form-actions">
 				  <input type="submit" class="btn btn-primary" name="submit" value="Save" />
 				  <a class="btn" href="<?php echo URL::to('pages')?>">Cancel</a>

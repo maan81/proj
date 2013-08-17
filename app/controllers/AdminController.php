@@ -182,7 +182,7 @@ class AdminController extends BaseController {
 	
 				//store new page
 				if(!empty($_POST)){
-					return $this->store();
+					return $this->store_page();
 				}
 
 				//disp empty new form
@@ -201,13 +201,13 @@ class AdminController extends BaseController {
 					$page = (object)array(	'username'=>'',
 											'page'	  =>'',
 										);
-					return $this->store($id);
+					return $this->store_page($id);
 				}
 
 				elseif($task=='delete'){
 
 					//delete page
-					return $this->delete($id);
+					return $this->delete($id,'pages');
 				}
 			}
 
@@ -230,7 +230,7 @@ class AdminController extends BaseController {
 
 
 
-	private function delete($delete_id=false){
+	private function delete($delete_id=false,$table='users'){
 
 		//validate
 		$rules = array(	'id' => 'required|integer');
@@ -238,15 +238,15 @@ class AdminController extends BaseController {
 		$validator = Validator::make(array('id'=>$delete_id), $rules);
 
 		if($validator->fails()){
-			return Redirect::to('users')->withErrors($validator)->withInput();
+			return Redirect::to($table)->withErrors($validator)->withInput();
 	  	}
 
-		$user = User::find($delete_id);
+		$item = ($table=='user')?User::find($delete_id):Page::find($delete_id);
 
-		if($user->delete()){
+		if($item->delete()){
 			
 			//Session::put('username', $userdata['email']);
-			return Redirect::to('users')->with('success', 'User ID '.$delete_id.' deleted.');
+			return Redirect::to($table)->with('success', 'Item ID '.$delete_id.' deleted.');
 
 		// }else{
 
@@ -273,8 +273,9 @@ class AdminController extends BaseController {
 		//store new data
 		if(!$update_id){
 			$userdata = array(
-								'title'		=>Input::get('title'),
+								'title'	=>Input::get('title'),
 								'page'	=>Input::get('page'),
+								'summary'=>Input::get('summary'),
 						);
 			$page = new Page($userdata);
 
@@ -284,10 +285,12 @@ class AdminController extends BaseController {
 			$page 			= Page::find($update_id);
 			$page->title	= Input::get('title');
 			$page->page 	= Input::get('page');
+			$page->summary	= Input::get('summary');
 		}
+//print_r($page);die;
 		$page->save();
 
-		return Redirect::to('users/'.$user->id);
+		return Redirect::to('pages/'.$page->id);
 	}
 
 	private function store($update_id=false){
