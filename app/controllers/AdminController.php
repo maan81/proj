@@ -189,7 +189,7 @@ class AdminController extends BaseController {
 				$page = (object)array(	'username'=>'',
 										'page'	  =>'',
 									);
-				return View::make('admin.page')->with('user',$user);
+				return View::make('admin.page')->with('page',$page);
 			}
 
 			//do update, delete
@@ -253,6 +253,41 @@ class AdminController extends BaseController {
 		// 	//Session::put('username', $userdata['email']);
 		// 	return Redirect::to('users')->withErrors('error','Invalid ID');
 		}
+	}
+
+	private function store_page($update_id=false){
+
+		//validate
+		$rules = array('title'=>'required'/*extend name validation .....*/ );
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if($validator->fails()){
+			if($update_id)
+			    return Redirect::to('pages/'.$update_id)->withErrors($validator)->withInput();
+
+		    return Redirect::to('pages/new')->withErrors($validator)->withInput();
+		}
+
+
+		//store new data
+		if(!$update_id){
+			$userdata = array(
+								'title'		=>Input::get('title'),
+								'page'	=>Input::get('page'),
+						);
+			$page = new Page($userdata);
+
+
+		//update existing data
+		}else{
+			$page 			= Page::find($update_id);
+			$page->title	= Input::get('title');
+			$page->page 	= Input::get('page');
+		}
+		$page->save();
+
+		return Redirect::to('users/'.$user->id);
 	}
 
 	private function store($update_id=false){
