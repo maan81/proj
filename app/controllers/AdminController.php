@@ -307,11 +307,86 @@ class AdminController extends BaseController {
 		}
 
 
-
-
 		$polls = DB::table('polls')->get();
 
 		return View::make('admin.polls')->with('polls', $polls);
+	}
+
+	public function ads(){
+
+		if (!Session::has('username')) return Redirect::to('login');
+		$id=false;
+		$task=false;
+
+		$url = explode('/', Request::url());
+		foreach($url as $key=>$val){
+			if($val=='ads'){
+				if(!empty($url[$key+1])){
+					$id=$url[$key+1];
+
+					if(!empty($url[$key+2])){
+						$task=$url[$key+2];
+					}
+					break;
+				}
+			}
+		}
+		if($id){
+
+			//disp empty form to create new ad
+			if($id=='new'){
+	
+				//store new ad
+				if(!empty($_POST)){
+					return $this->store_ad();
+				}
+
+				//disp empty new form
+				$ad = (object)array(	'title'	=>'',
+										'type'	=>'',
+										'image'	=>'',
+										'link'	=>'',
+										'script'=>'',
+									);
+				return View::make('admin.ad')->with('ad',$ad);
+			}
+
+			//do update, delete
+			if($task){
+
+				if($task=='update'){
+
+					//update ad
+					$ad = (object)array(	'title'	=>'',
+											'type'	=>'',
+											'image'	=>'',
+											'link'	=>'',
+											'script'=>'',
+										);
+					return $this->store_ad($id);
+				}
+
+				elseif($task=='delete'){
+
+					//delete ad
+					return $this->delete($id,'ads');
+				}
+			}
+
+			//get data & disp. selected ad for editing
+			$ad = DB::table('ads')->where('id',$id)->first();
+
+			// if(empty($ad)){
+			// 	return View::make('admin.ads')->withErrors($error);
+			// }
+			return View::make('admin.ad')->with('ad', $ad);
+
+		}
+
+		$ads = DB::table('ads')->get();
+
+		return View::make('admin.ads')->with('ads', $ads);
+
 	}
 
 	private function delete($delete_id=false,$table='users'){

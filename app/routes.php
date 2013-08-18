@@ -63,3 +63,10 @@ Route::get('polls/{id}', 'AdminController@polls', array('before'=>'auth'));
 Route::post('polls/{id}', 'AdminController@polls', array('before'=>'auth'));
 Route::get('polls/{id}/{pages}', 'AdminController@polls', array('before'=>'auth'));
 Route::post('polls/{id}/{pages}', 'AdminController@polls', array('before'=>'auth'));
+
+
+Route::resource('ads', 'AdminController@ads', array('before'=>'auth'));
+Route::get('ads/{id}', 'AdminController@ads', array('before'=>'auth'));
+Route::post('ads/{id}', 'AdminController@ads', array('before'=>'auth'));
+Route::get('ads/{id}/{pages}', 'AdminController@ads', array('before'=>'auth'));
+Route::post('ads/{id}/{pages}', 'AdminController@ads', array('before'=>'auth'));
