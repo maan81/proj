@@ -436,14 +436,35 @@ class AdminController extends BaseController {
 		//store new data
 		if(!$update_id){
 			$userdata = array(	'title'=>Input::get('title'),
-								'type'=>Input::get('type'),
+								'type' =>Input::get('type'),
 							);
-if($userdata['type']=='script'){
-	$userdata['script']=Input::get('script');
-}elseif($userdata['type']=='image'){
-//	$userdata['url']=Input::get('url');
-//	$userdata['image']=Input::get('image');
-}
+			
+			if($userdata['type']=='script'){
+				$userdata['script']=Input::get('script');
+			}elseif($userdata['type']=='image'){
+				$userdata['url']=Input::get('url');
+			
+				//---------------------------
+				$file = Input::file('ad');
+
+				$rand_name = str_random(8);
+				$userdata['image']=$rand_name;
+//var_dump($file);die;
+
+				$destinationPath = 'public/ads-imgs/'.$rand_name;
+				$filename = $file->getClientOriginalName();
+				//$extension =$file->getClientOriginalExtension(); 
+				$upload_success = Input::file('ad')->move($destinationPath, $filename);
+
+				if( $upload_success ) {
+					$upload_result = true;
+				} else {
+					echo 'err uploading';
+					die;
+					$upload_result = false;
+				}
+				//---------------------------
+			}
 
 			$ad = new Ad($userdata);
 
@@ -452,12 +473,12 @@ if($userdata['type']=='script'){
 			$ad 		= Ad::find($update_id);
 			$ad->title	= Input::get('title');
 			$ad->type	= Input::get('type');
-if($userdata['type']=='script'){
-	$userdata['script']=Input::get('script');
-}elseif($userdata['type']=='image'){
-//	$userdata['url']=Input::get('url');
+			if($userdata['type']=='script'){
+				$userdata['script']=Input::get('script');
+			}elseif($userdata['type']=='image'){
+				$userdata['url']=Input::get('url');
 //	$userdata['image']=Input::get('image');
-}
+			}
 		}
 
 		$ad->save();

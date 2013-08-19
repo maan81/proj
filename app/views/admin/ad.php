@@ -51,7 +51,9 @@
 			<?php echo Form::open( array( 'url'  =>((!empty($ad->id))? 
 														URL::to('ads/'.$ad->id.'/update'):
 														Request::url()),
-										  'class'=>'form-horizontal')
+										  'class'=>'form-horizontal',
+										  'files'=>true
+										  )
 								) ?>
 			  <fieldset>
 				<legend>
