@@ -404,6 +404,13 @@ class AdminController extends BaseController {
 			case 'user' : $item = User::find($delete_id); break;
 			case 'pages': $item = Page::find($delete_id); break;
 			case 'polls': $item = Poll::find($delete_id); break;
+			case 'ads':   $item = Ad::find($delete_id); 
+						  if($item->type=='image'){
+							foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator('public/ads-imgs/', FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST) as $path) {
+							    $path->isFile() ? unlink($path->getPathname()) : rmdir($path->getPathname());
+							}
+						  }
+						break;
 		}
 
 		if($item->delete()){
