@@ -449,7 +449,6 @@ class AdminController extends BaseController {
 
 				$rand_name = str_random(8);
 				$userdata['image']=$rand_name;
-//var_dump($file);die;
 
 				$destinationPath = 'public/ads-imgs/'.$rand_name;
 				$filename = $file->getClientOriginalName();

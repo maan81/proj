@@ -47,14 +47,16 @@
 			</div>
 		</div>
 		<div class="box-content">
-
-			<?php echo Form::open( array( 'url'  =>((!empty($ad->id))? 
-														URL::to('ads/'.$ad->id.'/update'):
-														Request::url()),
-										  'class'=>'form-horizontal',
-										  'files'=>true
-										  )
-								) ?>
+			<?php 	if(!empty($ad->id)){ 
+						echo '<div class="form-horizontal">';
+					}else{
+						echo Form::open(	array(	'url'=>Request::url(),
+												  	'class'=>'form-horizontal',
+												  	'files'=>true
+											)
+										);
+					}
+			?>
 			  <fieldset>
 				<legend>
 					<?php echo (!empty($ad->id))? 'Update ad':'Enter new ad' ?>
@@ -63,34 +65,43 @@
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Title </label>
 				  <div class="controls">
-					<?php echo Form::text(	'title',
-											((!empty($ad->id))? 
-														$ad->title:
-														Input::old('title')),
+					<?php 
+						if (empty($ad->id)){
+							echo Form::text('title', 
+											Input::old('title'),
 											array(
 												'class'=>'span4',
 												'id'=>"typeahead",
 												'data-provide'=>"typeahead", 
 												'data-items'=>"4",
-											));?>
+											)
+										);
+						}else{
+							echo '<span class="uneditable-input span4">'.$ad->title.'</span>';
+						}
+					?>
+
 				  </div>
 				</div>
-
-
 
 
 				<div class="control-group">
 					<label class="control-label" for="selectError3">Ads Type</label>
 					<div class="controls">
 						<?php 
-							echo Form::select(	'type', 
-												array(
-													'image'	=>'Image and URL',
-													'script'=>'HTML & Script'
-												), 
-												((!empty($ad->id))?$ad->type:Input::old('type')), 
-												array('id'=>"selectError3")
-											);
+							if(empty($ad->id)){
+
+								echo Form::select(	'type', 
+													array(
+														'image'	=>'Image and URL',
+														'script'=>'HTML & Script'
+													), 
+													Input::old('type'), 
+													array('id'=>"selectError3")
+												);
+							}else{
+								echo '<span class="uneditable-input span4">'.ucwords($ad->type)."</span>";
+							}
 						?>
 					</div>
 				</div>
@@ -112,25 +123,36 @@
 							$('.script_class').addClass('hide')
 						}
 					})
+					<?php if(empty($ad->id)){ ?>
+							$('.script_class').addClass('hide')
+							$('.image_class').addClass('hide')
+					<?php }elseif($ad->type=='script'){ ?>
+							$('.image_class').addClass('hide')
+					<?php }elseif($ad->type=='image'){	?>
+							$('.script_class').addClass('hide')
+					<?php }	?>
 
-					$('.script_class').addClass('hide')
-					$('.image_class').addClass('hide')
 				})
 				</script>
 
 				<div class="control-group <?php ($ad->type!='script')?'hide':'';?> image_class" >
 				  <label class="control-label" for="typeahead">URL </label>
 				  <div class="controls">
-					<?php echo Form::text(	'url',
-											((!empty($ad->id))? 
-														$ad->url:
-														Input::old('url')),
+					<?php 
+						if (empty($ad->id)){
+							echo Form::text('url',
+											Input::old('url'), 
 											array(
 												'class'=>'span4',
 												'id'=>"typeahead",
 												'data-provide'=>"typeahead", 
 												'data-items'=>"4",
-											));?>
+											)
+										);
+						}else{
+							echo '<span class="uneditable-input span4">'.$ad->url.'</span>';
+						}
+					?>
 				  </div>
 				</div>
 
@@ -170,12 +192,18 @@
 
 
 				<div class="form-actions">
-				  <input type="submit" class="btn btn-primary" name="submit" value="Save" />
-				  <a class="btn" href="<?php echo URL::to('ads')?>">Cancel</a>
+			
+					<?php if(empty($ad->id)): ?>
+							<input type="submit" class="btn btn-primary" name="submit" value="Save" />
+					<?php endif;	?>
+
+					<a class="btn" href="<?php echo URL::to('ads')?>">
+						<?php echo (!empty($ad->id))? 'Done':'Cancel' ?></a>
 				</div>
 
 			  </fieldset>
-			<?php echo Form::close() ?>
+
+			<?php  echo (!empty($ad->id))?'</div>': Form::close(); ?>
 
 		</div>
 	</div><!--/span-->
