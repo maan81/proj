@@ -52,7 +52,7 @@
 			  <thead>
 				  <tr>
 				  	  <th>ID</th>
-					  <th>Name</th>
+					  <th>Title</th>
 					  <th>Type</th>
 					  <th>Date Registered</th>
 					  <th>Date Updated</th>
@@ -63,7 +63,7 @@
 				<?php foreach ($ads as $ad): ?>
 				  	<tr>
 				  		<td width="5%"><?php echo $ad->id?></td>
-				  		<td width="16%"><?php echo $ad->name?></td>
+				  		<td width="16%"><?php echo $ad->title?></td>
 				  		<td width="24%"><?php echo $ad->type?></td>
 				  		<td width="16%"><?php echo $ad->created_at?></td>
 				  		<td width="16%"><?php echo $ad->updated_at?></td>

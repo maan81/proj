@@ -61,10 +61,10 @@
 				<div class="control-group">
 				  <label class="control-label" for="typeahead">Title </label>
 				  <div class="controls">
-					<?php echo Form::text(	'name',
+					<?php echo Form::text(	'title',
 											((!empty($ad->id))? 
-														$ad->name:
-														Input::old('name')),
+														$ad->title:
+														Input::old('title')),
 											array(
 												'class'=>'span4',
 												'id'=>"typeahead",
@@ -111,7 +111,8 @@
 						}
 					})
 
-					$('select').trigger('change');
+					$('.script_class').addClass('hide')
+					$('.image_class').addClass('hide')
 				})
 				</script>
 

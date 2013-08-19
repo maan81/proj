@@ -333,7 +333,6 @@ class AdminController extends BaseController {
 		}
 		if($id){
 
-			//disp empty form to create new ad
 			if($id=='new'){
 	
 				//store new ad
@@ -417,6 +416,53 @@ class AdminController extends BaseController {
 		// 	//Session::put('username', $userdata['email']);
 		// 	return Redirect::to('users')->withErrors('error','Invalid ID');
 		}
+	}
+
+	private function store_ad($update_id=false){
+
+		//validate
+		$rules = array(	'title'=>'required',
+					);
+		$validator = Validator::make(Input::all(), $rules);
+
+		if($validator->fails()){
+
+			if($update_id)
+			    return Redirect::to('ads/'.$update_id)->withErrors($validator)->withInput();
+
+		    return Redirect::to('ads/new')->withErrors($validator)->withInput();
+		}
+
+		//store new data
+		if(!$update_id){
+			$userdata = array(	'title'=>Input::get('title'),
+								'type'=>Input::get('type'),
+							);
+if($userdata['type']=='script'){
+	$userdata['script']=Input::get('script');
+}elseif($userdata['type']=='image'){
+//	$userdata['url']=Input::get('url');
+//	$userdata['image']=Input::get('image');
+}
+
+			$ad = new Ad($userdata);
+
+		//update existing data
+		}else{
+			$ad 		= Ad::find($update_id);
+			$ad->title	= Input::get('title');
+			$ad->type	= Input::get('type');
+if($userdata['type']=='script'){
+	$userdata['script']=Input::get('script');
+}elseif($userdata['type']=='image'){
+//	$userdata['url']=Input::get('url');
+//	$userdata['image']=Input::get('image');
+}
+		}
+
+		$ad->save();
+
+		return Redirect::to('ads/'.$ad->id);
 	}
 
 	private function store_poll($update_id=false){
