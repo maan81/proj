@@ -178,15 +178,21 @@
 				  <label class="control-label" for="typeahead">HTML/Script </label>
 				  <div class="controls">
 				  	<!-- script form -->
-
-						<?php echo Form::textarea(	'script',
-											((!empty($ad->id))? 
-														$ad->script:
-														Input::old('sript')),
-											array(
-												'rows'=>'3',
-												'span'=>'6,'
-											));?>
+					<?php 
+						if (empty($ad->id)){
+							echo Form::textarea(	'script',
+													Input::old('sript'),
+													array(
+														'rows'=>'3',
+														'span'=>'6,'
+													)
+												);
+						}else{
+							echo 	'<textarea class="uneditable-input span6" readonly="readonly" rows="3" style="height:67px;">'.
+										$ad->script.
+									'</textarea>';
+						}
+					?>
 				  </div>
 				</div>
 
