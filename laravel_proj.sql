@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 20, 2013 at 01:29 AM
+-- Generation Time: Aug 22, 2013 at 07:21 PM
 -- Server version: 5.5.32
 -- PHP Version: 5.5.1-2+debphp.org~precise+2
 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `ads` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 

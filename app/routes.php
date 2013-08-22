@@ -70,3 +70,6 @@ Route::get('ads/{id}', 'AdminController@ads', array('before'=>'auth'));
 Route::post('ads/{id}', 'AdminController@ads', array('before'=>'auth'));
 Route::get('ads/{id}/{pages}', 'AdminController@ads', array('before'=>'auth'));
 Route::post('ads/{id}/{pages}', 'AdminController@ads', array('before'=>'auth'));
+
+
+Route::resource('gallery', 'AdminController@gallery', array('before'=>'auth'));

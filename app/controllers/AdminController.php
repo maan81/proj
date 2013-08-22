@@ -2,6 +2,8 @@
 
 class AdminController extends BaseController {
 
+	//public function __construct(){echo 'asdf';die;}
+
 
 	/**
 	 *	login route
@@ -385,8 +387,17 @@ class AdminController extends BaseController {
 		$ads = DB::table('ads')->get();
 
 		return View::make('admin.ads')->with('ads', $ads);
-
 	}
+
+
+	public function gallery(){
+
+		Connector::init();
+die;
+		echo 'jaskjds';
+		die;
+	}
+
 
 	private function delete($delete_id=false,$table='users'){
 
